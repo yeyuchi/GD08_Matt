@@ -13,9 +13,7 @@ UCLASS()
 class MYARPG_API ATP_ThirdPersonGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-
-
+	
 public:
 	ATP_ThirdPersonGameMode();
-
 };
