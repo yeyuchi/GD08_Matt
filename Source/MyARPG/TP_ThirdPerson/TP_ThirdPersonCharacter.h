@@ -11,33 +11,32 @@ class MYARPG_API ATP_ThirdPersonCharacter : public ACharacter
 {
 	GENERATED_BODY()
 private:
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
 	
+
 public:
 	// Sets default values for this character's properties
 	ATP_ThirdPersonCharacter();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
-		float BaseTurnRate;
+	float BaseTurnRate;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
-		float BaseLookUpRate;
-	    void MoveForward(float Value);
-	    void MoveRight(float Value);
-	    void TurnAtRate(float Value);
-	    void TurnLookupRate(float Value);
+	float BaseLookUpRate;
 
-
-
+	void MoveForward(float MoveForward);
+	void MoveRight(float MoveRight);
+	void TurnAtRate(float TurnRate);
+	void LookUpAtRate(float LookUpRate);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	//APawn interface
-	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)override;
-	//End of APawn interface
 
 public:	
 	// Called every frame
@@ -45,5 +44,18 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Character")
+	void OnDamaged(float Damage, const FHitResult& HitInfo, class ACharacter* InstigatedCharacter, AActor* DamageCauser);
+	
+public: 
+	UFUNCTION(BlueprintCallable, Category="Character")
+	virtual void HandleDamage(float Damage, const FHitResult& HitInfo, class ACharacter* InstigatedCharacter, AActor* DamageCauser)
+	{
+		OnDamaged(Damage, HitInfo, InstigatedCharacter, DamageCauser);
+	}
+
 
 };
